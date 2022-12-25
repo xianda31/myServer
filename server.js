@@ -1,48 +1,37 @@
 const express = require("express");
-const cors = require("cors");
 
+const bodyParser = require('body-parser');
+const cors = require("cors");
+const root = './';
+const port = process.env.PORT || '3000';
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
+app.use(cors({
+    origin: 'http://localhost:4200'
+}));
 
-app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// create & connect to database
-const db = require("./app/mongoModels/defineModel");
-db.mongoose
-  .connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Connected to the database ",db.url);
-  })
-  .catch(err => {
-    console.log("Cannot connect to the database!", err);
-    process.exit();
-  });
+const adherent_routes = require('./app/controllers/adherent/adherent_router');
+app.use('/bcsto', adherent_routes);
 
-  /*END OF MONGOOSE SETUP*/
 
-// parse requests of content-type - application/json
-app.use(express.json());
+//  connect to database
+require('./mongoDB').DBconnect();
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.listen(port, () => console.log(`API running at localhost:${port}\/bcsto`));
 
-// // define GET handler for root URL
+
+app.get('*', (req, res) => {
+  res.json( "<p> BCSTO web-server activated .... </p>" );
+});
+
+
+/*/ // define GET handler for root URL
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to BCSTO web-server...." });
 });
+*/
 
-// define  the router module handling  routes starting from / (???)
-require("./app/routes/routes")(app);
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
