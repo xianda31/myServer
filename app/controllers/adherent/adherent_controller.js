@@ -1,16 +1,11 @@
 const Adherent = require("./adherent_model");
 
-//require("../mongo").connect();
 
-
-// READ all Heroes
+// READ all adherents
 async function readAdherents() {
     const docList = [];
     const docquery = await Adherent.find({},{ _id: 0 });   
-   
-    
     docquery.forEach((d) => docList.push(d));
-    console.log("got %s adherents...",docList.length);
     return docList;
 }
 
