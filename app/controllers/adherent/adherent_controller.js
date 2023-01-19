@@ -1,28 +1,33 @@
-const Adherent = require("./adherent_model");
+const MemberDoc = require("./member_model");
 
 
-// READ all adherents
-async function readAdherents() {
+// READ all members
+async function readMembers() {
     const docList = [];
-    const docquery = await Adherent.find({},{ _id: 0 });   
+    const docquery = await MemberDoc.find({});   
     docquery.forEach((d) => docList.push(d));
     return docList;
 }
 
-// CREATE a hero
- async function createHero(hero) {
+// CREATE a member
+ async function createMember(doc) {
+     console.log(" server creating  doc :",doc);
+    
     const aPromise = new Promise((resolve,reject) => {
-    Hero.create(hero)
-        .then((doc) => resolve(doc))
-        .catch((err) => reject(err.message));
+    doc.create()
+        .then((doc) => { console.log(doc);
+                        resolve(doc);})
+        .catch((err) => {   console.log("err");
+                            reject(err.message)}
+                            );
     });
     return aPromise;
 }
 
-// UPDATE hero[id]
-async function updateHero(hero) {
+// UPDATE member[id]
+async function updateMember(member) {
     const aPromise = new Promise((resolve,reject) => {
-    Hero.findOneAndUpdate({id : hero.id},hero)
+    MemberDoc.findOneAndUpdate({_id : member._id},member)
         .then((doc) => resolve(doc))
         .catch((err) => reject(err.message));
     });
@@ -41,8 +46,8 @@ async function deleteHero(heroId) {
 }
 
 module.exports = {
-    createHero,
-    readAdherents,
-    updateHero,
+    createMember,
+    readMembers,
+    updateMember,
     deleteHero,
 };
