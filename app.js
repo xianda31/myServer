@@ -19,10 +19,10 @@ app.use((req, res, next) => {
     next();
 });
 
-const adherent_routes = require('./app/controllers/adherent/adherent_router');
-app.use('/bcsto', adherent_routes);
+const members_routes = require('./app/members/member_router');
+app.use('/bcsto', members_routes);
 
 //  connect to database
-require('./mongoDB').DBconnect();
+require('./mongo_init').DBconnect();
 
 module.exports = app;
