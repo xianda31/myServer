@@ -6,14 +6,13 @@ const MemberSchema = new mongoose.Schema(
     
     firstName: String,
     lastName: String,
-    email: String,
-    phone: String,
+    mail: String,
+    tel: String,
     address: String,
     city: String,
     zip: String,
     license: Number,
     status: Number,
-    adh_key:   String,
   },
   {
     collection: "members", // =  nom par défaut de la collection cf règles d’affectation de noms au pluriel de Mongoose).
