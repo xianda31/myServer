@@ -19,7 +19,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const members_routes = require('./app/members/member_router');
+const members_routes = require('./app/router');
 app.use('/bcsto', members_routes);
 
 //  connect to database
