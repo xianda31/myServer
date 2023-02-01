@@ -7,8 +7,8 @@ router.route("*").all((req, res, next) => {
   next();
 });
 
-require('./members/member_routes').set_member_routes(router) ;
-require('./excel/excel_routes').set_excel_routes(router) ;
+require('../members/member_routes').set_member_routes(router) ;
+require('../excel/excel_routes').set_excel_routes(router) ;
 
 function timeIs() {
   const date_ob = new Date();
