@@ -25,4 +25,7 @@ app.use('/bcsto', routes);
 //  connect to database
 require('./mongo_init').DBconnect();
 
+
+
+
 module.exports = app;
